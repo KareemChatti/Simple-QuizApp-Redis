@@ -1,0 +1,30 @@
+<div class="container">
+  <div class="start-box">
+    <h1>Quiz Application</h1>
+    <p>Enter your username to start the quiz</p>
+
+    <input
+      type="text"
+      [(ngModel)]="username"
+      placeholder="Enter username"
+      class="input-field"
+      (keyup.enter)="startQuiz()"
+    />
+
+    <button
+      (click)="startQuiz()"
+      [disabled]="loading"
+      class="btn btn-primary"
+    >
+      {{ loading ? 'Starting...' : 'Start Quiz' }}
+    </button>
+
+    <div *ngIf="error" class="error-message">
+      {{ error }}
+    </div>
+
+    <div class="info">
+      <p>You will answer 3 questions to test your knowledge.</p>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,46 @@
+<div class="container" *ngIf="!quizCompleted">
+  <div class="quiz-box">
+    <div class="header">
+      <h2>Quiz for {{ username }}</h2>
+      <div class="score-display">Score: {{ score }}</div>
+    </div>
+
+    <div *ngIf="currentQuestion" class="question-section">
+      <div class="progress">
+        Question {{ currentQuestionIndex + 1 }} of 3
+        <div class="progress-bar">
+          <div class="progress-fill" [style.width]="((currentQuestionIndex + 1) / 3 * 100) + '%'"></div>
+        </div>
+      </div>
+
+      <h3>{{ currentQuestion.text }}</h3>
+
+      <div class="options">
+        <button
+          *ngFor="let option of optionLabels"
+          (click)="submitAnswer(option)"
+          [disabled]="loading || answeredQuestions.has(currentQuestionId)"
+          class="option-btn"
+        >
+          <span class="option-letter">{{ option }}</span>
+          <span class="option-text">{{ getOptionText(option) }}</span>
+        </button>
+      </div>
+
+      <div *ngIf="feedback" [class.feedback]="true" [class.success]="feedbackType === 'success'" [class.error]="feedbackType === 'error'">
+        {{ feedback }}
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container" *ngIf="quizCompleted">
+  <div class="quiz-box quiz-complete">
+    <h2>Quiz Complete!</h2>
+    <div class="final-score">
+      <p>Your Final Score: <strong>{{ score }}/3</strong></p>
+    </div>
+    <p>Great job, {{ username }}! Check the leaderboard to see how you rank.</p>
+    <button (click)="viewLeaderboard()" class="btn btn-primary">View Leaderboard</button>
+  </div>
+</div>

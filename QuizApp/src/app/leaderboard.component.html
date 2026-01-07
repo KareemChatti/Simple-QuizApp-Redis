@@ -1,0 +1,43 @@
+<div class="container">
+  <div class="leaderboard-box">
+    <h2>Leaderboard</h2>
+
+    <div *ngIf="loading" class="loading">
+      Loading leaderboard...
+    </div>
+
+    <div *ngIf="!loading && error" class="error-message">
+      {{ error }}
+    </div>
+
+    <div *ngIf="!loading && leaderboard.length > 0">
+      <table class="leaderboard-table">
+        <thead>
+          <tr>
+            <th>Rank</th>
+            <th>Username</th>
+            <th>Score</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let entry of leaderboard" [class.top-rank]="entry.rank === 1">
+            <td class="rank-cell">
+              <span *ngIf="entry.rank === 1" class="medal">🥇</span>
+              <span *ngIf="entry.rank === 2" class="medal">🥈</span>
+              <span *ngIf="entry.rank === 3" class="medal">🥉</span>
+              <span *ngIf="entry.rank > 3">{{ entry.rank }}</span>
+            </td>
+            <td>{{ entry.username }}</td>
+            <td class="score-cell">{{ entry.score }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div *ngIf="!loading && leaderboard.length === 0" class="empty-message">
+      No users yet. Be the first to take the quiz!
+    </div>
+
+    <button (click)="startNewQuiz()" class="btn btn-primary">Start New Quiz</button>
+  </div>
+</div>
